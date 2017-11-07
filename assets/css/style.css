@@ -1,29 +1,48 @@
 /*This represents the complete outline of the HTML. THe width is 3/4 of the screen, centered, complete height (may need to change this later) and centered within the body using
 margin:auto  */
+* {
+    color:white;
+    width: 90%;
+    margin:auto;    
+}
 
-.container{
-    width:75%;
+body {
+    background: white;    
+}
+
+.fullContainer{
     background: black;
     height: 100%;
-    margin: auto;
+    border:1px solid red;
+
+
+}
+
+.introContainer,
+.gameContainer
+{
+    width:75%;
+    
+
 }
 /*This represents the header on the intro page, centered. Need to determine what it should look like.*/
-#introHeader {
+.mainHeader {
     color: white;
     /*Determine font fmily, size, color, outline, border,image?, incorporating logos?*/
     width: fit-content;
-    margin: auto;
+   
 }
 
 /*This sets all the font on the Intro page to white. My use on other pages.*/
 
-.whiteFont{
+* {
     color:white;
     width: 90%;
-    margin: auto;
+    
 }
 
 #startButton {
-    margin:auto;/* FIgure out how to center button */
+    background-color: red;/* FIgure out how to center button */
+    width: fit-content;
 
 }

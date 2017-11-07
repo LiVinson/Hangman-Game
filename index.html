@@ -10,14 +10,17 @@
 </head>
 <body>
 
-    <div class="container">
+    <!--CONTAINER 1: INTRODUCTION SCREEN: Will use JS to mke this container disappear (hidden) when start game button is pressed (Maybe some kind of toggle)-->
+    
+<div class="fullContainer"> 
+    <div class="introContainer">
 
         <div class="introductionScreen">
             
 
 
     
-        <h1 id="introHeader" "whiteFont">Hangman: SEC Edition</h1>
+        <h1 id="mainHeader" "whiteFont">Hangman: SEC Edition</h1>
 
         <div id="openingInstructions">
         
@@ -34,6 +37,25 @@
         </div>
     </div>
 
+    <div class="gameContainer">
+            <h1 id="mainHeader" "whiteFont">Hangman: SEC Edition</h1>
+
+            <div id="gameInfo">
+            
+                <div><p id="wordDisplayed"><!--Link this to the js variable that makes underline array a string-->Word to Guess</p></div>
+
+                <p class="wins">Wins:</p>
+                <p class="losses">Losses:</p>
+                <p class="guessesRemaining">Guesses Remaining:</p>
+                <div><p class="alreadyGuessed">Already Guessed: </p></div>
+            </div>
+
+
+
+
+
+    </div>
+</div>  
     <script src="assets/javascript/game.js">
 
     </script>
