@@ -42,13 +42,32 @@
     var wordToGuess = wordBank[Math.floor(Math.random() * wordBank.length)];
         console.log("The word that was randomly chosen is: " + wordToGuess);
 
+    
+
+
+    //Get "underscore span" and for the HTML, set it equal to the random word, after the letters were changed to underscores
+
     var wtgLength = wordToGuess.length;
         console.log("And it has " + wtgLength + " characters, including any spaces");
                 //for each place in the index, check (if/else) if the value is a letter (part of the alpabet array). If so, replace it with an 
                 //underline, else if it is an ampersand replace it with and ampersand (html) with spaces around, else it (it's a space) don't do
                 // change anything. Then join together a string and have it displyed as underlines?
 
-    var numberOfSpaces = 0                
+    var numberOfSpaces = 0   
+    
+    var wtgDisplayed = wordToGuess
+    
+    for (j = 0; j < wtgLength; j++){
+        
+        if (wordToGuess[j] !== " ") {
+            wtgDisplayed = wtgDisplayed.replace(wordToGuess[j], "_");
+            
+        }  
+    console.log(wtgDisplayed);
+    }
+
+    console.log("what to display on screen: " + wtgDisplayed);
+
     
     for (i = 0; i < wtgLength; i++) {
         
@@ -59,12 +78,9 @@
             console.log("There are " + numLettersToGuess);
 
         }
-        
-        
     };
-    
-    
-    console.log(wordToGuess);
+//NOt sure if this should go in for or not: For each index in the word to guess, if the value is a character, 
+//replace that position in a duplicate string with an underline 
     
 
  //Determine how to get underlines for randomWord to be displayed, an ampersand for an ampersand and and space for any other 
