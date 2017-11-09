@@ -47,19 +47,19 @@ body {
 
 /*This sets all the font on the page to white.*/
 
-.wordDiv{
-    width: 50%;
+#wordDiv{
     margin-left:10px;
     margin-right:10px;
     
 
 }
-#underScores{
+.underlines{
     font-size: 40px;
     width: fit-content;
     margin:auto;
     margin-bottom: 40px;
     margin-top: 40px;
+    letter-spacing: 4px;
 }
 
 #gameText{
