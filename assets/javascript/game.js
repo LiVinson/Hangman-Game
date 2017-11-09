@@ -22,27 +22,50 @@
     //Equals the number of guesses user has used; resets after each question or stops the game if reaches a certain number (0)
     var guessesRemaining = 10;
 
-    var displayUnderline
+    var displayUnderline; //determine if this is necessary
+
+    var wins = document.getElementById("wins");
+
+    var losses = document.getElementById("losses");
+
+    var alphabetList = "A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z";
+
+    //In order to make the alphabet string split into an array with separate items, must use "toString" otherwise length shows as 1 instead of 26
+    var alphabetArray = alphabetList.toString().split(",");
+
+       console.log("every letter of the alphabet as a value in an array: " + alphabetArray);
+
+    // var alphabetIndexed = indexOf Try to figure out if I can set a 
+    //variable = to each character of the alphabetArray string w/o a function
+    //If it requires a function, I think it would be something like
+    //for (i=0; i < alphabetList.length; i++ {eachLetter = alphabetList.indexOf[i]}
+                //if (userGuess !== eachLetter)
+                    //break(?). Return a message to pick a valid letter?
 
     // A randomly chosen item from the wordBank array
     var wordToGuess = wordBank[Math.floor(Math.random() * wordBank.length)];
-    console.log(wordToGuess);
+        console.log("The word that was randomly chosen was: " + wordToGuess);
 
-    wordToGuessLength = wordToGuess.length;
-    randomWordChar = "";
-    wordToGuessChar = wordToGuess.split("");
-    console.log(wordToGuessChar);
-    
-    spaceIndex = wordToGuessChar.indexOf(" ");
-    if spaceIndex !== -1
+            //Determine how to get underlines for randomWord to be displayed, an ampersand for an ampersand and and space for any other 
+            //character in word
 
-        wordToGuessChar[spaceIndex] =
 
-    for (a = 0; a < wordToGuessLength; a++){
-       
-        var underline = document.getElementById("underscores");
-        
-        randomWordChar += wordToGuess[a];
+            // wordToGuessLength = wordToGuess.length;
+            // randomWordChar = "";
+
+            // wordToGuessChar = wordToGuess.split("");
+            // console.log(wordToGuessChar);
+            
+            // spaceIndex = wordToGuessChar.indexOf(" ");
+            // if spaceIndex !== -1
+
+            //     wordToGuessChar[spaceIndex] =
+
+            // for (a = 0; a < wordToGuessLength; a++){
+            
+            //     var underline = document.getElementById("underscores");
+                
+            //     randomWordChar += wordToGuess[a];
         
         
         // if (randomWordChar === wordToGuess[0])
@@ -51,40 +74,43 @@
         // else
         //     underline.innerText = underline + randomWordChar;
                   
-    }
+    // }
 
-    console.log(randomWordChar);
+        // console.log(randomWordChar);
 
-    underline.innerText = randomWordChar;
+        // underline.innerText = randomWordChar;
 
  
     //******Make the text that is displayed show an underline for each letter in the word, 
     //an ampersand for an ampersand and and space for any other character in word
 
-// This function is run whenever the user presses a key.
-document.onkeyup = function (event) {
-    
-    // Saves the value of the key pressed to userChoice
-    var userChoice = (event.key).toUpperCase();
-    console.log(userChoice);
-
-//When the document is loaded,listen for key to be pressed. When this occurs, run a block f code
-// addEventListener = function(event) {
-    
-//     console.log(String.fromCharCode(event.charCode));
-//     //sets number of characters in the word = to a variable
-//     var wordToGuessLength = wordToGuess.length;
-
+// LISTEN UP FOR KEY PRESSED AND ACTIONS TO TAKE
+    document.onkeyup = function (event) {
         
+        // Saves the value of the key pressed to userChoice, capitalized
+        var userChoice = (event.key).toUpperCase();
+            console.log("the key that was pressed (capitlized) was: " + userChoice);
+        
+        if (alphabetArray.indexOf(userChoice) === -1) { 
+            console.log("Invalid character. Please select a letter A -Z");
 
-    //Listen for a key to be pressed, and run an event
-    // TESTING addEventListener("keypress", function(event) {
+        } else {
+            console.log("A valid letter was chosen");
+        }
+    }
 
-          //Makes value of key pressed lowercase and a string. Assigns value to userGuess    
-        // var userGuess = (String.fromCharCode(event.charCode));
-    //     console.log(userGuess);
-    // ;
-}
+            
+        //Test if the letter pressed = A -Z
+            //If true: compare it to each character in the previousGUesses array
+                //If a match: do nothing, (display message)
+                //If not a match, call a function
+            
+            //If false, do nothing (display message)
+  
+
+
+
+
        
  //STOPPED HERE
 
