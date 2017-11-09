@@ -51,7 +51,7 @@ body {
     width: 50%;
     margin-left:10px;
     margin-right:10px;
-    float: left
+    
 
 }
 #underScores{
@@ -73,4 +73,9 @@ body {
 .gameInfo{
     margin-left:0;
     margin-right:0;
+}
+
+#previouslyGuessed {
+    width: fit-content;
+    margin-bottom: 15px;
 }

@@ -1,5 +1,6 @@
 //----DECLARE VARIABLES -------------------------------------------------------------------------------------------
 
+
     //Words that user will have to guess, randomly selected
     var wordBank = ["FLORIDA GATORS",
                     "GEORGIA BULLDOGS", 
@@ -16,47 +17,68 @@
                     "ARKANSAS RAZORBACKS",
                     "MISSOURI TIGERS"]
 
-    //Creates an empty array to hold the users guesses; will need to reset at the end of each game
-    
-
-    
-    
-
-    
     //***Figure out how get the html to display the previous guesses, guesses remaining, wins, and losses and update as the game goes.
-    
+   
+
+    //Creates an empty array to hold the users guesses; will need to reset at the end of each game
    var previousGuesses = [];
     
-    //Equals the number of guesses user has used; resets after each question or stops the game if reaches a certain number (0)
-    var guessesRemaining = 10;
+    //Equals the number of guesses user has used; resets after each round or stops the game if reaches a certain number (0)
+    var guessesRemaining = 6;
         
     var wins = 0;
      
     var losses = 0;   
     
-    var gameMessage = "practice message"
+    var gameMessage = " ";
 
     //String created to confirm userGuess is valid character
     var alphabetList = "A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z";
 
     //In order to make the alphabet string split into an array with separate items, must use "toString" otherwise length shows as 1 instead of 26
     var alphabetArray = alphabetList.toString().split(",");
-       console.log("every letter of the alphabet as a value in an array: " + alphabetArray);
-
+   
     // A randomly chosen item from the wordBank array
     var wordToGuess = wordBank[Math.floor(Math.random() * wordBank.length)];
-        console.log("The word that was randomly chosen was: " + wordToGuess);
+        console.log("The word that was randomly chosen is: " + wordToGuess);
 
-    var underlines = ["a", "b", "c"]
+    var wtgLength = wordToGuess.length;
+        console.log("And it has " + wtgLength + " characters, including any spaces");
+                //for each place in the index, check (if/else) if the value is a letter (part of the alpabet array). If so, replace it with an 
+                //underline, else if it is an ampersand replace it with and ampersand (html) with spaces around, else it (it's a space) don't do
+                // change anything. Then join together a string and have it displyed as underlines?
+
+    var numberOfSpaces = 0                
     
-    underlines.join(" ")
+    for (i = 0; i < wtgLength; i++) {
+        
+        if (alphabetList.indexOf(wordToGuess[i]) === -1) { 
+            console.log("There is a space between " + wordToGuess[i-1] + " and " + wordToGuess[i+1]);
+            console.log("Number of spaces in " + wordToGuess + ":" + (numberOfSpaces += 1));
+            numLettersToGuess = (wtgLength - numberOfSpaces);
+            console.log("There are " + numLettersToGuess);
 
-console.log(underlines)
-    //Determine how to get underlines for randomWord to be displayed, an ampersand for an ampersand and and space for any other 
-        //character in word
+        }
+        
+        
+    };
+    
+    
+    console.log(wordToGuess);
+    
 
-            //Practice Underline Code:
+ //Determine how to get underlines for randomWord to be displayed, an ampersand for an ampersand and and space for any other 
+    //character in word
 
+//Practice Underline Code:
+
+
+    // var underlines = ["a", "b", "c"];
+    
+    // underlines.join(" ");
+
+// console.log(underlines);
+//    
                 // wordToGuessLength = wordToGuess.length;
                 // randomWordChar = "";
 
@@ -93,8 +115,9 @@ console.log(underlines)
 //FUNCTION 1: COMPARE FUNCTION
 
     //This  will compare the characters in the random word to the userGuess and take action based on if it is a match or not
-        //Consider comparing the userChoice to an array of the randomword characters as an array instead of string so that 
+        //Consider comparing the userChoice to an array of the randomword characters instead of string so that 
         //the match can be removed and it will tke care of duplicate letters too
+
     function compare(userChoiceArg, wordToGuessArg) {
         //Checks if the workToGuess contains the userChoice and if it doesn't (returning value of -1), then it will say its not a match
         if (wordToGuessArg.indexOf(userChoiceArg) === -1) {
@@ -109,21 +132,23 @@ console.log(underlines)
             
                 //Game Over: Display message: You Lose, increase Losses total. Display the correct answer (preferable as blanks,
                 //but could also using the blanks)
-                console.log("Game Over!");
-            
-                // Calls GameOver function Button appears that, when clicked, resets the game
-                //gameOver()
-                losses += 1;
-                console.log(wins);
-        
+                gameMessage = "Game Over! The correct answer is: " + wordToGuessArg;
+                losses++;
+                gameOver (); // FUNCTION TO BE DEFINED
+                    
+       
             //There are still more guesses left. Should listen for another key
             } else {
-                 console.log("You have " + guessesRemaining + " guesses remaining!");
+                 gamesMessage = "You have " + guessesRemaining + " guesses remaining!";
             }
         
-            //There is  match
+        //There is  match between userName and a charcter in the random word
         } else { 
-            console.log("It's a match! The letter " + userChoiceArg + " is in " + wordToGuessArg)            
+            console.log("It's a match! The letter " + userChoiceArg + " is in " + wordToGuessArg)    
+            
+            //# of characters to guess - randomWord length - (number of characters that are not in the alphabet array )
+
+          
             
             //Check if there are any letters remaining to guess
                 // If all letters are guessed: 
@@ -150,6 +175,9 @@ console.log(underlines)
 
     document.onkeyup = function (event) {
         
+        //Remove any game message from last time
+        gameMessage = " ";
+        
         // Saves the value of the key pressed to userChoice, capitalized
         var userChoice = (event.key).toUpperCase();
             console.log("the key that was pressed (capitlized) was: " + userChoice);
@@ -167,7 +195,7 @@ console.log(underlines)
             //no match (unique guess), logs the guess into the previousGuess array.
             if (previousGuesses.indexOf(userChoice) === -1) {
                 console.log("This is a unique guess");
-                //Go back and add this as a message to appear in HTML
+                
 
                 //Since it is unique, push the userChoice value to the end of the previousGuesses array
                 previousGuesses.push(userChoice);
@@ -179,6 +207,7 @@ console.log(underlines)
             // If there is a match to previousGuess array, this ws already guessed
             }else {
                 console.log("This was  guessed previously, guess again!");
+                gameMessage = "The letter " + userChoice + " was already guessed. Please guess again."
                 //Go back and add this as a message to appear in HTML
             }
             
