@@ -5,6 +5,7 @@
 
 <title> </title>
 
+<link rel="stylesheet" href="assets/css/reset.css">
 <link rel="stylesheet" href="assets/css/style.css">
 
 </head>
@@ -18,21 +19,26 @@
 
     <div id="openingInstructions">
         <p class="whiteFont"><span class="bold">Instructions: </span> Each round, attempt to guess the word(s) by pressing a letter. Try to guess all of the letters
-        within 10 turns to win. To start, press "s"</p>     
+        within 10 turns to win. Guess a letter to start!</p>     
     </div>
 
     <div class="gameContainer">
-            
-        <div><p id="wordDisplayed"><!--Link this to the js variable that makes underline array a string-->Word to Guess</p></div>
-
-        <div>Already Guessed: <p class="alreadyGuessed"></p></div>
-
-        <p class="wins">Wins:</p>
-        <p class="losses">Losses:</p>
-        <p class="guessesRemaining">Guesses Remaining:</p>
-        
            
+        <div id = "underscores"></div>
+
+        <div id ="gameText">
+            
+            <p>Previous Guesses: <div class="previousGuesses"></div></p>
+
+            <p>Guesses Remaining: <div class="guessesLeft gameInfo"></div></p>
+
+            <p>Wins: <div class="wins gameInfo"></div></p>
+
+            <p>Losses: <div class="losses gameInfo"></div></p>                    
+          
+        </div>
     </div>
+
 </div>  
     <script src="assets/javascript/game.js">
 

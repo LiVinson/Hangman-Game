@@ -1,62 +1,123 @@
 //DECLARE VARIABLES
 
-//Words that user will have to guess, randomly selected
-var wordBank = ["florida_gators",
-                "georgia_bulldogs", 
-                "tennessee_volunteers", 
-                "south_carolina_gamecocks",
-                "vanderbilt_commodores",
-                "kentucky_wildcats",
-                "alabama_crimson_tide",
-                "louisiana_state_tigers",
-                "ole_miss_rebels",
-                "mississippi_state_bulldogs",
-                "texas_am_aggies",
-                "auburn_tigers",
-                "arkansas_razorbacks",
-                "missouri_tigers"];
+    //Words that user will have to guess, randomly selected
+    var wordBank = ["FLORIDA GATORS",
+                    "GEORGIA BULLDOGS", 
+                    "TENNESSEE VOLUNTEERS", 
+                    "SOUTH CAROLINA GAMECOCKS",
+                    "VANDERBILT COMMODORES",
+                    "KENTUCKY WILDCATS",
+                    "ALABAMA CRIMSON TIDE",
+                    "LOUISIANA STATE TIGERS",
+                    "OLE MISS REBELS",
+                    "MISSISSIPPI STATE BULLDOGS",
+                    "TEXAS AM AGGIES",
+                    "AUBURN TIGERS",
+                    "ARKANSAS RAZORBACKS",
+                    "MISSOURI TIGERS"]
 
- //Creates an empty array to hold the users guesses; will need to reset at the end of each game
-var previousGuesses = [];
+    //Creates an empty array to hold the users guesses; will need to reset at the end of each game
+    var previousGuesses = [];
 
-//Equals the number of guesses user has used; resets after each question or stops the game if reaches a certain number (0)
-var guessesRemaining = 10;
+    //Equals the number of guesses user has used; resets after each question or stops the game if reaches a certain number (0)
+    var guessesRemaining = 10;
 
+    var displayUnderline
 
-document.onkeyup = function (event) {
-
-    //Makes value of key pressed lowercase and a string. Assigns value to userGuess    
-    var userGuess = (event.keycode)
-
-     // A randomly chosen item from the wordBank array
+    // A randomly chosen item from the wordBank array
     var wordToGuess = wordBank[Math.floor(Math.random() * wordBank.length)];
+    console.log(wordToGuess);
 
-        console.log(wordToGuess);
-    // Sets variable to the length of the word chosen.
-    var wordToGuessLength = wordToGuess.length;
+    wordToGuessLength = wordToGuess.length;
+    randomWordChar = "";
+    wordToGuessChar = wordToGuess.split("");
+    console.log(wordToGuessChar);
+    
+    spaceIndex = wordToGuessChar.indexOf(" ");
+    if spaceIndex !== -1
 
-    var underline = "_"
-    var space = " "
+        wordToGuessChar[spaceIndex] =
 
-        console.log(wordToGuessLength);
-    //Empty array
-    var numberUnderlines = []; 
+    for (a = 0; a < wordToGuessLength; a++){
+       
+        var underline = document.getElementById("underscores");
+        
+        randomWordChar += wordToGuess[a];
+        
+        
+        // if (randomWordChar === wordToGuess[0])
+        //     underline.innerText =  randomWordChar; 
 
-        //For each index in wordToGuess: add "an underscore" or a blank into the numberUnderlines array
-    for (i = 0; i < wordToGuessLength; i++){
-        if(wordToGuess[i] !== "_")
-        numberUnderlines.push("underline");
+        // else
+        //     underline.innerText = underline + randomWordChar;
+                  
+    }
 
-        else
-        numberUnderlines.push("A");      
-    } 
-    console.log(numberUnderlines)
-    //Once underline/spaces are each an item of underline array, turn it into one string
-    var wordDisplayed = numberUnderlines.join("");
+    console.log(randomWordChar);
 
-    //Set value (string) of the underline string to display in HTML
-    document.getElementById("wordDisplayed").innerHTML = numberUnderlines;
+    underline.innerText = randomWordChar;
+
+ 
+    //******Make the text that is displayed show an underline for each letter in the word, 
+    //an ampersand for an ampersand and and space for any other character in word
+
+// This function is run whenever the user presses a key.
+document.onkeyup = function (event) {
+    
+    // Saves the value of the key pressed to userChoice
+    var userChoice = (event.key).toUpperCase();
+    console.log(userChoice);
+
+//When the document is loaded,listen for key to be pressed. When this occurs, run a block f code
+// addEventListener = function(event) {
+    
+//     console.log(String.fromCharCode(event.charCode));
+//     //sets number of characters in the word = to a variable
+//     var wordToGuessLength = wordToGuess.length;
+
+        
+
+    //Listen for a key to be pressed, and run an event
+    // TESTING addEventListener("keypress", function(event) {
+
+          //Makes value of key pressed lowercase and a string. Assigns value to userGuess    
+        // var userGuess = (String.fromCharCode(event.charCode));
+    //     console.log(userGuess);
+    // ;
 }
+       
+ //STOPPED HERE
+
+
+
+//     for (i = 0; i < wordToGuessLength; i++) {
+//         if(userGuess = wordToGuess[i]){
+            
+//         }
+       
+
+//     }
+
+
+
+//     //Empty array
+//     var numberUnderlines = []; 
+
+//         //For each index in wordToGuess: add "an underscore" or a blank into the numberUnderlines array
+//     for (i = 0; i < wordToGuessLength; i++){
+//         if(wordToGuess[i] !== "_")
+//         numberUnderlines.push("underline");
+
+//         else
+//         numberUnderlines.push("A");      
+//     } 
+//     console.log(numberUnderlines)
+//     //Once underline/spaces are each an item of underline array, turn it into one string
+//     var wordDisplayed = numberUnderlines.join("");
+
+//     //Set value (string) of the underline string to display in HTML
+//     document.getElementById("wordDisplayed").innerHTML = numberUnderlines;
+// }
   
 
    

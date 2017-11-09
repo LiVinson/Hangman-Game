@@ -1,48 +1,67 @@
-/*This represents the complete outline of the HTML. THe width is 3/4 of the screen, centered, complete height (may need to change this later) and centered within the body using
+/*This represents the complete outline of the HTML. THe width is 3/4 of the screen, centered, complete height
+(may need to change this later) and centered within the body using
 margin:auto  */
-* {
+
+
+*{
     color:white;
-    width: 90%;
-    margin:auto;    
+    margin:auto;  
+    box-sizing: border-box;  
 }
 
 body {
-    background: white;    
+    background: white;  
+    margin:auto;  
+    width:100%
 }
 
 .fullContainer{
     background: black;
     height: 100%;
     border:1px solid red;
-
-
+    width:75%;
+    margin: auto;
 }
 
-.introContainer,
 .gameContainer
 {
-    width:75%;
-    
-
+    width:90%;
+    margin:auto;
+ 
 }
 /*This represents the header on the intro page, centered. Need to determine what it should look like.*/
-.mainHeader {
+#mainHeader {
     color: white;
     /*Determine font fmily, size, color, outline, border,image?, incorporating logos?*/
     width: fit-content;
-   
-}
-
-/*This sets all the font on the Intro page to white. My use on other pages.*/
-
-* {
-    color:white;
-    width: 90%;
+    margin:auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 50px;
     
 }
+#openingInstructions{
+    margin:auto;
+    width:90%;
+}
 
-#startButton {
-    background-color: red;/* FIgure out how to center button */
+/*This sets all the font on the page to white.*/
+
+#underScores{
+    font-size: 40px;
     width: fit-content;
+    margin:auto;
+    margin-bottom: 40px;
+    margin-top: 40px;
+}
 
+#gameText{
+    font-size: 24px;
+    line-height:1.5;
+    margin-top:20px;
+}
+
+#gameInfo{
+    margin-left:0;
+    margin-right:0;
 }
