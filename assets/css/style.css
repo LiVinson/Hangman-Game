@@ -47,6 +47,13 @@ body {
 
 /*This sets all the font on the page to white.*/
 
+.wordDiv{
+    width: 50%;
+    margin-left:10px;
+    margin-right:10px;
+    float: left
+
+}
 #underScores{
     font-size: 40px;
     width: fit-content;
@@ -59,9 +66,11 @@ body {
     font-size: 24px;
     line-height:1.5;
     margin-top:20px;
+    width: fit-content;
+    color: white;
 }
 
-#gameInfo{
+.gameInfo{
     margin-left:0;
     margin-right:0;
 }
