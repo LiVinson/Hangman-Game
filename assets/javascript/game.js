@@ -1,276 +1,288 @@
 //----DECLARE VARIABLES (Globally Defined) -------------------------------------------------------------------------------------------
 
 
-//Starting Logic:
-//chooseWordToGuess(): Choose a random word and split into array - store as wordArray
-//changeCharToUnderScore(): For each character in the word, swap a "_" for the underscore and store underscoreArray
-//createWordString: Change the udnerscore into a string with proper spaces
-//Update the text on screen with word values
+    //Words that user will have to guess, randomly selected
+    var wordBank = ["FLORIDA GATORS",
+                    "GEORGIA BULLDOGS", 
+                    "TENNESSEE VOLUNTEERS", 
+                    "SOUTH CAROLINA GAMECOCKS",
+                    "VANDERBILT COMMODORES",
+                    "KENTUCKY WILDCATS",
+                    "ALABAMA CRIMSON TIDE",
+                    "LOUISIANA STATE TIGERS",
+                    "OLE MISS REBELS",
+                    "MISSISSIPPI STATE BULLDOGS",
+                    "TEXAS AM AGGIES",
+                    "AUBURN TIGERS",
+                    "ARKANSAS RAZORBACKS",
+                    "MISSOURI TIGERS"]
 
-//On button press:
+   
 
-//confirmGuessValid: Check if user pressed a valid key
-//compareGuessToWord: If wrong, decrements guessesLeft, checks if game is over;
-//If correct, decrements numLetterstoGuess, calls to createWordString for update
+    //Creates an empty array to hold the users guesses; will need to reset at the end of each game
+   var previousGuesses = [];
+    
+    //Equals the number of guesses user has used; resets after each round or stops the game if reaches a certain number (0)
+    var guessesRemaining = 6;
+        
+    var wins = 0;
+     
+    var losses = 0;   
+    
+    var gameMessageDiv = document.getElementById("gameMessageDiv");
+
+    // Grabs span on screen, and sets content equal to the value of wins, losses, previousGuesses, and guesses Remaining
+
+        
+    var previouslyGuessedSpan = document.getElementById("previouslyGuessedSpan");
+    // previouslyGuessedSpan.innerHTML = previousGuesses;
+    
+    var guessesRemainingSpan = document.getElementById("guessesRemainingSpan");
+    guessesRemainingSpan.innerHTML = guessesRemaining;
+
+    var winsSpan = document.getElementById("winsSpan");
+    winsSpan.innerHTML = wins;
+
+    var lossesSpan = document.getElementById("lossesSpan");
+    lossesSpan.innerHTML = losses;
+
+    //String created to confirm userGuess is valid character
+    var alphabetList = "A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z";
+
+    //In order to make the alphabet string split into an array with separate items, must use "toString" otherwise length shows as 1 instead of 26
+    var alphabetArray = alphabetList.toString().split(",");
+   
+    // A randomly chosen item from the wordBank array
+    var wordToGuess = wordBank[Math.floor(Math.random() * wordBank.length)];
+        console.log("The word that was randomly chosen is: " + wordToGuess);
+
+    //Sets variable equal to the length of the word to guess (incluedes any spaces)
+    var wtgLength = wordToGuess.length;
+        console.log("And it has " + wtgLength + " characters, including any spaces");
+                //for each place in the index, check (if/else) if the value is a letter (part of the alpabet array). If so, replace it with an 
+                //underline, else if it is an ampersand replace it with and ampersand (html) with spaces around, else it (it's a space) don't do
+                // change anything. Then join together a string and have it displyed as underlines?
+
+    //Varible equal to number of spaces in word to guess, initially set to 0
+    var numberOfSpaces = 0;
+
+    var wtgDisplayed = wordToGuess; //wtgDisplayed uses a space (not the html version)
+
+    var spaceHTML = "&nbsp;" //For html to display spaces, user this variable in place of " "
+
+    var spaceRegular = " "
+
+    var gameOverWord = wordToGuess.replace(spaceRegular, spaceHTML)//This is the word to display if the user loses
 
 
-//Each time user makes a correct guess, replace the index of the correct guess in underscoreArray with the value of
-//same index from wordArray (don't change it all just the match. Should keep anything changed previously) - will need to splice string
+//----------------------------------------------- CODE TO RUN---------------------------------------------------------
 
-//Call wordString again to update the string and resave working Guess.
-//Updates guesses remaining, etc
-
-//Redisplay string (with letters where correct.)
-
-
-//Words that user will have to guess, randomly selected
-
-const WORDBANK = [
-    "FLORIDA GATORS",
-    "GEORGIA BULLDOGS",
-    "TENNESSEE VOLUNTEERS",
-    "SOUTH CAROLINA GAMECOCKS",
-    "VANDERBILT COMMODORES",
-    "KENTUCKY WILDCATS",
-    "ALABAMA CRIMSON TIDE",
-    "LOUISIANA STATE TIGERS",
-    "OLE MISS REBELS",
-    "MISSISSIPPI STATE BULLDOGS",
-    "TEXAS A&M AGGIES",
-    "AUBURN TIGERS",
-    "ARKANSAS RAZORBACKS",
-    "MISSOURI TIGERS"
-];
-
-const ALPHABET_LIST = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
-
-//Begins the game: sets list of previous guesses, number of guesses, wins, and losses
-
-let gameStats = {
-    previousGuesses: [],
-    guessesRemaining: 6,
-    wins: 0,
-    losses: 0,
-    guessWordIndex: null, //index of word to guess in wordbank array
-    guessWordActual: null, //This is the word that was chosen from the array, as an array
-    guessWordBlanks: null, //Word chosen with _ for words, as an array
-    guessWordWorkingString: null, //This is what will be used to display, and will be updated after each guess. Will have space concatenated into string
-    guessWordCharsLeftToGuess: null, //This is the number of chars to guess. Equals # of letters - spaces/amp in array
-    gameMessage: "",
-    gameOver: false
-}
-
-
-let gameText = {
-    wordToGuessDisplay: document.getElementById("word-to-guess"),
-    gameMessageDisplay: document.getElementById("game-message"),
-    previouslyGuessedDisplay: document.getElementById("previously-guessed"),
-    guessesRemainingDisplay: document.getElementById("guesses-remaining"),
-    winsDisplay: document.getElementById("wins"),
-    lossesDisplay: document.getElementById("losses")
-}
-
-//Dynamically displays text on screen based on current game stats
-function setScoreInfo() {
-
-    if (gameStats.previousGuesses.length) {
-        gameText.previouslyGuessedDisplay.innerHTML = gameStats.previousGuesses.join(", ")
-    } else {
-        console.log("nothing guessed yet");
-        gameText.previouslyGuessedDisplay.innerHTML = "Any letters you have guessed will display here."
+//Runs a loop through the length of the word to guess and changes the character to underlines. For each character in the string, checks if the value is not equal to a space. 
+    
+    for (i = 0; i < wtgLength; i++){
+        
+        if (wordToGuess[i] !== " ") {
+            //If value is not a space, then replace that letter with an underscore and then a space
+            wtgDisplayed = wtgDisplayed.replace(wordToGuess[i], "_");
+        }
+        else 
+        numberOfSpaces ++ //For each character that is a space logs a count.
     }
-    gameText.guessesRemainingDisplay.innerHTML = gameStats.guessesRemaining;
-    gameText.winsDisplay.innerHTML = gameStats.wins;
-    gameText.lossesDisplay.innerHTML = gameStats.losses;
-    gameText.gameMessageDisplay.innerHTML = gameStats.gameMessage;
-    gameText.wordToGuessDisplay.innerHTML =  gameStats.guessWordWorkingString;
-    return
-}
+    
+    var wtgDisplayedSpace = wtgDisplayed //wtgDisplayedSpace has underlines and a traditional space
+    
+    wtgDisplayed = wtgDisplayed.replace(/spaceRegular/g, spaceHTML); //replaces the traditional space with the "&nbsp;" so it can display in HTML
 
-function chooseWordToGuess() {
-    gameStats.guessWordIndex = Math.floor(Math.random() * WORDBANK.length);
-    gameStats.guessWordActual = WORDBANK[gameStats.guessWordIndex].split(""); //splits the string into an array including spaces/ampersands
-}
+    //Determine how many letters user needs to guess, for each match of userGuess to one of the characters in the word, reduce the number To Guess by 1
+    var numberToGuess = wtgLength - numberOfSpaces;
 
-//Input: Each letter of word to be guessed in an array;
-// Output: Each letter of word in array as underscore, with space and ampersand still included
-function changeCharToUnderScore() {
-    let guessWordArr = gameStats.guessWordActual;
-    let blankWordArr = [];
-    let numOfLetters = 0;
-    //for each letter in the displayWord, determine if it is a letter, a space, or an ampersand
-    console.log("chosen word in array before swapping for _", guessWordArr);
+    //Creates a div and assigns it to a variable
+    var underlinesDisplayed = document.createElement("div");
 
-    guessWordArr.forEach(function (char, index) {
-        if (ALPHABET_LIST.indexOf(char) > -1) { //checks if character is a letter or not, and if so replaces it with underscore
-            blankWordArr[index] = "_";
-            numOfLetters++
-        } else {
-            blankWordArr[index] = char;
-        }
-    });
-    gameStats.guessWordCharsLeftToGuess = numOfLetters;
-    gameStats.guessWordBlanks = blankWordArr; //This is an array with blanks for letters
-};
+    //Assigns the div that was created a class name so it can be formatted in CSS
+    underlinesDisplayed.className = "underlines";
 
-function createWordString() {
-    let wordString = "";
-    gameStats.guessWordBlanks.forEach(function (char) {
-        if (char === " ") {
-            wordString += '&nbsp'; //If it's a space, add encoded space
-        } else {
-            wordString += char; //If an underscore, concantenate it onto string
-        }
-        wordString += " "; //Then add an extra space between all characters
-    });
-    gameStats.guessWordWorkingString = wordString;
+    //Sets html text of the underlines div to the value of wtgDisplayed (Which should now be underlines)
+    underlinesDisplayed.innerHTML = wtgDisplayed;
 
-    setScoreInfo();
-    return;
-}
+    //Locates the element with ID wordDiv, and attaches the underlinesDisplayed div that was created
+    document.getElementById("wordDiv").appendChild(underlinesDisplayed);
+   
+   
 
-// console.log("word in array after swapping letters for underscores", displayWordArr)
-
-// console.log("after changing from array to string:", displayWordArr.join(" "));
-// gameStats.guessWordBlanks = displayWordArr.join(" ");
-// gameStats.guessWordCharsLeftToGuess = displayWordArr.length - numbOfNonLetters;
-// }
-
-
-function confirmGuessValid(event) {
-    gameStats.gameMessage = "";
-    userChoice = event.key.toUpperCase();
-    console.log("userChoice: ", userChoice);
-    // Compares the value of userChoice (key pressed) to each item in the alphabet Array. If the key press is not a letter, then return an error message
-    if (ALPHABET_LIST.indexOf(userChoice) === -1) {
-        gameStats.message = "Invalid character. Please select a letter A-Z";
-        return;
+    //Listens for a key to be pressed. WHen this occurs, the following block of code is run each time:
+    document.onkeyup = function (event) {
+        
+        //Remove any game message from last guess
+        gameMessageDiv.innerHTML = "";
+        
+        // Saves the value of the key pressed to userChoice, capitalized
+        var userChoice = (event.key).toUpperCase();
+            console.log("the key that was pressed (capitlized) was: " + userChoice);
+            
+        
+        // Compares the value of userChoice (key pressed) to each item in the alphabet Array. If the key press is not a letter, then return an error message
+        if (alphabetArray.indexOf(userChoice) === -1) { 
+            gameMessageDiv.innerHTML = "Invalid character. Please select a letter A-Z";
 
         //If key pressed is a letter then proceed to the next test
-    } else if (gameStats.previousGuesses.indexOf(userChoice) > -1) {
-        console.log("This was  guessed previously, guess again!");
-        gameStats.message = "The letter " + userChoice + " was already guessed. Please guess again.";
-        return;
-    } else {
-        console.log("This is a unique guess");
-        gameStats.previousGuesses.unshift(userChoice);
-        //Call the compare function (defined below) that compares the userChoice to the characters in the random word
-        compareGuessToWord(userChoice);
-    }
-}
+        } else {
+            console.log("A valid letter was chosen");
 
-function compareGuessToWord(userGuess) {
-    //Checks if the workToGuess contains the userChoice and if it doesn't (returning value of -1), then it will say its not a match
-    if (gameStats.guessWordActual.indexOf(userGuess) === -1) {
-        //Since there was not match, guesses remaining reduces by 1
-        gameStats.guessesRemaining--;
+            //Compare the userChoice to each item in the previousGuess array to determine if the userChoice was previously guessed.
+            if (previousGuesses.indexOf(userChoice) === -1) {
+                console.log("This is a unique guess");
+                
 
-    } else {
+                //If value  is unique, push the userChoice value to the end of the previousGuesses array, update the previouslyGuessedSpan with the new value
+                previousGuesses.push(userChoice);
+                console.log("Now, previous guesses is: " + previousGuesses);
+                previouslyGuessedSpan.innerHTML = previousGuesses;
+                
 
-        // For each character in the wordToGuess, replace the character that matches the userChoice
-        for (k = 0; k < gameStats.guessWordActual.length; k++) {
+                //Call the compare function (defined below) that compares the userChoice to the characters in the random word
+                compare(userChoice, wordToGuess);
 
-            //If the choice is a match at a partiular index position, update the corresponding index in the guessWordBlank array
-            if (userGuess === gameStats.guessWordActual[k]) {
-                gameStats.guessWordBlanks[k] = userGuess;
-                console.log("After replacing the underlines with the user choice where there was a match: " + gameStats.guessWordBlanks)
+            // If there is a match to previousGuess array, this was already guessed
+            } else {
+                console.log("This was  guessed previously, guess again!");
+                gameMessageDiv.innerHTML = "The letter " + userChoice + " was already guessed. Please guess again.";
 
-                //numberToGuess is set to number of characters (nonspaces); For each match the userguesses, the number reduces
-                gameStats.guessWordCharsLeftToGuess--;
-                console.log("Number or letters remaining to guess: ", gameStats.guessWordCharsLeftToGuess)
             }
+            
         }
-        //Once all of the matching letters have been displayed for the guess, updates the HTML so it show on the screen.       
+
+
     }
-    checkGameOver();
-}
 
-//Needed?
-function displayFullWord(wordIndex) {
-    let displayWord = WORDBANK[wordIndex];
+//When the compare function is called run the following:
+
+    function compare(userChoiceArg, wordToGuessArg) {
 
 
-}
+        //Checks if the workToGuess contains the userChoice and if it doesn't (returning value of -1), then it will say its not a match
+        if (wordToGuessArg.indexOf(userChoiceArg) === -1) {
+           
+            //Since there was not match, guesses remaining reduces by 1
+            guessesRemaining -= 1;
+            
+            // The text onscreen updates to reflect the new # of guesses
+            guessesRemainingSpan.innerHTML = guessesRemaining;
+    
+            //Will check if there are any guesses left e
+            if (guessesRemaining < 1) {
+            
+                //If there are no guesses remaining, call gameOver
+                gameOver();                    
+        
+            //There are still more guesses left. Should listen for another key
+            } else {
+                gameMessageDiv.innerHTML = "The userGuess is not a match to any letters in " + wordToGuessArg + "! Guess again!";
+            }
+        
+        //There is  match between userName and a charcter in the random word
+        } else { 
+            
+            console.log("It's a match! The letter " + userChoiceArg + " is in " + wordToGuessArg);    
+            
+            // For each character in the wordToGuess, replace the character that matches the userChoice
+            for (k = 0; k < wordToGuessArg.length; k++) {
+                
+                //If the choice is a match at a partiular index position
+                if (userChoiceArg === wordToGuessArg.charAt(k)){
 
+                    //Takes the wtgDisplaySpace (this is the word to guess with traditional spaces) and extracts the first k letters
+                    // (i.e. if match is at index 5, takes characters at index 0, 1, 2, 3, and 4) concatenates with the matching letter
+                    // and concatenates with the rest of the string after the position of the matching letter (index position k + 1)
+                    wtgDisplayedSpace = wtgDisplayedSpace.substr(0, k) + userChoiceArg +  wtgDisplayedSpace.substr(k + 1);
+                    
+                    console.log("After replacing the underlines with the user choice where there was a match: " + wtgDisplayedSpace)
+
+                    //Changes the display word back to having HTML spaces, now with correct letters showing
+                    wtgDisplayed =  wtgDisplayedSpace.replace(spaceRegular, spaceHTML);
+
+                    console.log("THis is after changing the space back to the html code for a space: " + wtgDisplayed)
+                  
+                    //numberToGuess is set to number of characters (nonspaces); For each match the userguesses, the number reduces
+                    numberToGuess -= 1;
+                    console.log("Number or letters remaining to guess: " + numberToGuess)
+
+                    if (numberToGuess <1)
+                        gameOver(); //To be Defined
+                }
+            } 
+            //Once all of the matching letters have been displayed for the guess, updates the HTML so it show on the screen.
+            underlinesDisplayed.innerHTML = wtgDisplayed;
+
+        }  
+    }        
+        
 //  GAMEOVER FUNCTIONS
 
-function checkGameOver() {
-
-    if (gameStats.guessWordCharsLeftToGuess < 1) { //user won
-        gameStats.wins++;
-        gameStats.gameMessage = "Congrats! You won! Press the spacebar key to play again."
-        gameStats.gameOver = true;
-        setScoreInfo()
-    } else if (gameStats.guessesRemaining === 0) { //user lost
-        gameStats.lossess++;
-        gameStats.gameMessage = `Game Over! The correct answer is ${WORDBANK[gameStats.wordIndex]}. Press  spacebar to play again.`
-        gameStats.guessWordWorkingString = WORDBANK[gameStats.wordIndex]
-        gameStats.gameOver = true;
-        setScoreInfo()
-    } else {
-        console.log("game's not over, keep guessing!")
-        createWordString()
+function gameOver () {
+    //If the user won:
+    if (numberToGuess < 1){ 
+        wins++;
+        winsSpan.innerHTML = wins;
+        gameMessageDiv.innerHTML = "Congrats! You won! Press the spacebar key to play again."
+           
+        
+    } else{ //If the user lost
+        
+        losses++;
+        lossesSpan.innerHTML = losses
+        gameMessageDiv.innerHTML = "Game Over! The correct answer is " + wordToGuess + " Press the spacebar key to play again."
     }
-}
 
+     //Listens for user to press space bar to reset the game
+    document.onkeyup = function (event) {
+        console.log(event.keycode)
 
-//Listens for user to press space bar to reset the game
-document.onkeyup = function (event) {
-    console.log(event.keycode)
+        if (event.keycode == 32 ){
+            
+            //Resets guesses
+            previousGuesses = [];
+            guessesRemaining = 6;
+            
+            //Chooses new word, and updates length and display word previously defined to correspond to last word chosen
+            wordToGuess = wordBank[Math.floor(Math.random() * wordBank.length)];
+            wtgLength = wordToGuess.length;
+            wtgDisplayed = wordToGuess;
 
-    if (event.keycode == 32) {
-
-        //Resets guesses
-        previousGuesses = [];
-        guessesRemaining = 6;
-
-        //Chooses new word, and updates length and display word previously defined to correspond to last word chosen
-        guessWord = WORDBANK[Math.floor(Math.random() * WORDBANK.length)];
-        wtgLength = guessWord.length;
-        wtgDisplayed = guessWord;
-
-        //Resets the word displayed on the screen
-        for (i = 0; i < wtgLength; i++) {
-
-            if (guessWord[i] !== " ") {
-                //If value is not a space, then replace that letter with an underscore
-                wtgDisplayed = wtgDisplayed.replace(guessWord[i], "_");
-            } else {
-                numberOfSpaces++ //For each character that is a space logs a count.
+            //Resets the word displayed on the screen
+            for (i = 0; i < wtgLength; i++){
+                
+                if (wordToGuess[i] !== " ") {
+                    //If value is not a space, then replace that letter with an underscore
+                    wtgDisplayed = wtgDisplayed.replace(wordToGuess[i], "_");
+                }
+                else {
+                numberOfSpaces ++ //For each character that is a space logs a count.
+                }
             }
-        }
+            
+            wtgDisplayedSpace = wtgDisplayed //wtgDisplayedSpace has underlines and a traditional space
+            
+            wtgDisplayed = wtgDisplayed.replace(/spaceRegular/g, spaceHTML); //replaces the traditional space with the "&nbsp;" so it can display in HTML
 
-        wtgDisplayedSpace = wtgDisplayed //wtgDisplayedSpace has underlines and a traditional space
-
-        wtgDisplayed = wtgDisplayed.replace(/spaceRegular/g, spaceHTML); //replaces the traditional space with the "&nbsp;" so it can display in HTML
-
-        //Determine how many letters user needs to guess to win
-        numberToGuess = wtgLength - numberOfSpaces;
+            //Determine how many letters user needs to guess to win
+            numberToGuess = wtgLength - numberOfSpaces;
 
         //Sets html text of the underlines div to the value of wtgDisplayed (Which should now be underlines)
-        underlinesDisplayed.innerHTML = wtgDisplayed;
+            underlinesDisplayed.innerHTML = wtgDisplayed;
+        }
     }
 }
 
+    
 
-chooseWordToGuess();
-changeCharToUnderScore();
-createWordString();
-
-
-//Listens for a key to be pressed. WHen this occurs, the following block of code is run each time:
-document.onkeyup = function (event) {
-    confirmGuessValid(event)
-
-};
+ 
 
 
-
-
-//DESIGN:
-//GET LOGO FOR EACH SEC SCHOOL - DONE
-//GET SOME BASIC INFO FOR EACH SCHOOL
-//FIGURE OUT HOW TO GET THE IMAGE AND INFO FOR SCHOOL TO BE DISPLAYED WHEN GAME IS OVER (WIN OR LOSE)
-//FONT: COLOR, SIZE, FONT FAMILY
-//GAME BACKGROUND DESIGN AND GENERAL BACKGROUND DESIGN
-//MUSIC? (BONUS)
+        //DESIGN:
+            //GET LOGO FOR EACH SEC SCHOOL - DONE
+            //GET SOME BASIC INFO FOR EACH SCHOOL
+            //FIGURE OUT HOW TO GET THE IMAGE AND INFO FOR SCHOOL TO BE DISPLAYED WHEN GAME IS OVER (WIN OR LOSE)
+            //FONT: COLOR, SIZE, FONT FAMILY
+            //GAME BACKGROUND DESIGN AND GENERAL BACKGROUND DESIGN
+            //MUSIC? (BONUS)

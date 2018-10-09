@@ -1,111 +1,53 @@
 <!DOCTYPE>
 <html lang="en=us">
-
 <head>
-    <meta charset=UTF-8>
+<meta charset=UTF-8>
 
-    <title>SEC Hangman</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
-        crossorigin="anonymous">
-    <!-- <link rel="stylesheet" href="assets/css/reset.css"> -->
-    <!-- <link rel="stylesheet" href="assets/css/style.css"> -->
+<title> </title>
+
+<link rel="stylesheet" href="assets/css/reset.css">
+<link rel="stylesheet" href="assets/css/style.css">
 
 </head>
-
 <body>
 
     <!--CONTAINER 1: INTRODUCTION SCREEN: Will use JS to mke this container disappear (hidden) when start game button is pressed (Maybe some kind of toggle)-->
+    
+<div class="fullContainer"> 
+ 
+    <h1 id="mainHeader" "whiteFont">Hangman: SEC Edition</h1>
 
-    <!-- <div class="fullContainer">
-        <h1 id="mainHeader" "whiteFont">Hangman: SEC Edition</h1>
-        <div id="openingInstructions">
-            <p class="whiteFont"><span class="bold">Instructions: </span> Each round, attempt to guess the word(s) by
-                pressing a letter. Try to guess all of the letters
-                within 10 turns to win. Guess a letter to start!</p>
-        </div>
-
-        <div class="gameContainer">
-            <div id="wordDiv">
-
-            </div>
-
-            <div id="gameText">
-                <p>Previous Guesses: <span id="previouslyGuessedSpan" class="gameInfo"></span></p>
-                <p>Guesses Remaining: <span id="guessesRemainingSpan" class="gameInfo"></span></p>
-                <p>Wins: <span id="winsSpan" class="gameInfo"></span> </p>
-                <p>Losses: <span id="lossesSpan" class="gameInfo"></span></p>
-                <div id="gameMessageDiv"></div>
-
-            </div>
-        </div>
-
-    </div> -->
-
-
-    <div class="container">
-        <!--Contains 'jumobotron-->
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="card w-100">
-                    <div class="card-body">
-                        <h1>Hangman: SEC Edition</h1>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--Contains Instructions and Win/Loss Cards -->
-        <div class="row">
-            <div class="col-sm-5">
-                <div class="card">
-                    <h5 class="card-header">Score</h5>
-                    <div class="card-body">
-                        <h5 class="card-text">Guesses Remaining:<span id="guesses-remaining"></span> </h5>
-                        <h5 class="card-text">Wins: <span id="wins" class="game-info"></span></h5>
-                        <h5 class="card-text">Losses:  <span id="losses" class="game-info"></span></h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-7">
-                <div class="card">
-                    <h5 class="card-header">Instructions</h5>
-                    <div class="card-body">
-                        <h5 class="card-title">Do you know your SEC Teams?</h5>
-                        <p class="card-text">Each round, attempt to guess the word(s) by
-                            pressing a letter. Try to guess all of the letters
-                            within 10 turns to win. Guess a letter to start!</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--End  Instructions and Win/Loss Row -->
-        <div class="row">
-            <div class="col-sm-3">
-                <div class="card">
-                    <h5 class="card-header">Letters Guessed</h5>
-                    <div class="card-body">
-                        <span id="previously-guessed"></span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-9">
-                <div class="card">
-                    <h5 class="card-header">Word to Guess</h5>
-                    <div class="card-body">         
-                        <p class="card-text" id="word-to-guess">
-                            <!--Word to Guess to be Dynamically Generated-->
-                        </p>
-                        <p id="game-message"></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+    <div id="openingInstructions">
+        <p class="whiteFont"><span class="bold">Instructions: </span> Each round, attempt to guess the word(s) by pressing a letter. Try to guess all of the letters
+        within 10 turns to win. Guess a letter to start!</p>     
     </div>
 
+    <div class="gameContainer">
+           
+        <div id = "wordDiv">
 
+           
+        </div>
 
+        <div id ="gameText">
+            
+            <p>Previous Guesses: <span id = "previouslyGuessedSpan" class = "gameInfo"></span></p>
 
-    <script src="assets/javascript/game.js"></script>
+            <p>Guesses Remaining: <span id = "guessesRemainingSpan" class = "gameInfo" ></span></p>
+
+            <p>Wins: <span id = "winsSpan" class = "gameInfo"></span> </p>
+
+            <p>Losses: <span id = "lossesSpan" class = "gameInfo"></span></p>  
+            
+            <div id = "gameMessageDiv"></div>
+          
+        </div>
+    </div>
+
+</div>  
+    <script src="assets/javascript/game.js">
+
+    </script>
 </body>
 
 </html>
